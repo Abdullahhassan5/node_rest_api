@@ -4,6 +4,9 @@ const res = require('express/lib/response');
 const app = express();
 app.use(express.json());
 var employees = require('./routes/routes')
+app.use(express.static('./public/'))
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({extended: false}))
 
 app.use('/user',employees)
 

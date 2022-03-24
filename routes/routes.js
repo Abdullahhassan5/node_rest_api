@@ -109,5 +109,29 @@ router.put('/:id',(req , res)=>{
 
 
 })
+
+
+
+router.post('/', (req, res) => {
+  console.log(req.body)
+  console.log("Trying to create a new user...")
+  console.log("How do we get the form data???")
+  console.log("Fetching user with id: " + req.params.id)
+  console.log("First name: " + req.body.create_first_name)
+  console.log("Last name: " + req.body.create_last_name)
+  const firstName = req.body.create_first_name
+  const lastName = req.body.create_last_name
+  const queryString = "INSERT INTO employees (first_name, last_name) VALUES (?, ?)"
+  dbConn.query(queryString, [firstName, lastName], (err, results, fields) => {
+    if (err) {
+      console.log("Failed to insert new user: " + err)
+      res.sendStatus(500)
+      return
+    }
+
+    console.log("Inserted a new user with id: ", results.insertId);
+    res.end()
+  })
+})
   
   module.exports = router;
